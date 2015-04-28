@@ -24,6 +24,7 @@ for( auto i: zip(vec1,vec2) ){
 //...
 auto myRange = map(vec,[](auto i){ return i*2; });
 for( auto i : myRange ){...}
+//```
 
-```
+for( auto i : repeat(5,42) ){...} // repeats the value 42, 5 times
 
