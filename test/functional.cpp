@@ -35,6 +35,12 @@ Describe(functionalTestcase)
        Assert::That(i,Equals(j*2));++j;
     }
 
+    j=0;
+    for(auto i: repeat(5,42)){
+      Assert::That(i==42);
+      ++j;
+    }
+    Assert::That(5==j);
 
   };
   

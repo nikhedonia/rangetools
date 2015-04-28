@@ -140,7 +140,7 @@ constexpr auto range(B const b, E const e){
 
 template<class E>
 constexpr auto range(E const e){
-  return Range<E,E>{0,e,1};
+  return Range<E,E>{0,e};
 } 
 
 template<class R>
@@ -154,10 +154,11 @@ constexpr auto map(R r,F f){
   return MappedRange<R,F>{r,f};  
 }
 
+template<class T>
+constexpr auto repeat(uint N, T val){
+  return map(range(N),[val](auto){ return val; });
+}
 
-
-
-  
 
 
 }
