@@ -12,13 +12,11 @@ vector<int> vec={...};
 for(auto i : reverse(vec) ){ ... }
 
 for(auto i: enumerate(vec) ){
-  cout<< i.num << i.val << endl;
+  cout<< i.idx << i.val << endl;
 }
 
-//...
-
-for( auto i: zip(vec1,vec2) ){
-  cout<< get<0>(i) << get<1>(i) << endl;
+for( auto i: zip(vec1,vec2,...,vecN) ){
+  cout<< get<0>(i) << get<1>(i) << endl; // tuples...
 }
 
 //...
