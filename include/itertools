@@ -1,4 +1,0 @@
-#ifndef ITERTOOLS
-#define ITERTOOLS
-#include "it/itertools.hpp"
-#endif
