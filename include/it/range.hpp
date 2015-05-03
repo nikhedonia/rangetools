@@ -3,7 +3,8 @@
 
 #include "generic.hpp"
 #include "generator.hpp"
-
+#include <iostream>
+using namespace std;
 namespace rangetools {
 
 struct Range  {

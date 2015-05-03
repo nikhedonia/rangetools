@@ -3,10 +3,7 @@
 
 using namespace rangetools;
 using namespace igloo;
-
-
-
-
+using namespace std;
 
 
 Describe(rangeToolsTestcase)
@@ -29,10 +26,12 @@ Describe(rangeToolsTestcase)
   Describe(RangeTest){
     It(should_count_from_0_to_4){
       int i=0;
-      for( auto j : gen*Range(5) ){
+      auto g= gen*Range(5);
+      for( auto j : g ){
         Assert::That( j == i );
         ++i;
       }
+      Assert::That(i==5);
 
     }
 
