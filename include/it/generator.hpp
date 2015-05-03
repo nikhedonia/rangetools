@@ -51,25 +51,49 @@ auto value(L&l)
 
 
 template<class L, class R,
+  REQUIRES( !has_next<L,R>() ) >
+auto next(L&l, R)
+-> decltype(l.next()) {
+  return l.next();
+}
+
+template<class L, class R,
+  REQUIRES( !has_done<L,R>() ) >
+auto done(L&l, R)
+-> decltype(l.done() ){
+  return l.done();
+}
+
+template<class L, class R,
+  REQUIRES( !has_value<L,R>() ) >
+auto value(L&l, R)
+-> decltype(l.value()) {
+  return l.value();
+}
+
+
+template<class L, class R,
   REQUIRES( has_next<L,R>() ) >
-auto next(L&l,R&r)
+auto next(L&l, R&r)
 -> decltype(l.next(forward<R>(r))) {
   return l.next(forward<R>(r));
 }
 
 template<class L, class R,
-  REQUIRES( has_done<L>() ) >
+  REQUIRES( has_done<L,R>() ) >
 auto done(L&l, R&r)
 -> decltype(l.done(forward<R>(r))) {
   return l.done(forward<R>(r));
 }
 
 template<class L, class R,
-  REQUIRES( has_value<L>() ) >
-auto value(L&l,R&r)
+  REQUIRES( has_value<L,R>() ) >
+auto value(L&l, R&r)
 -> decltype(l.value(forward<R>(r))) {
   return l.value(forward<R>(r));
 }
+
+
 
 }
 
@@ -141,6 +165,14 @@ template<class R>
 constexpr auto operator *( Gen<> G, R r){
   return Gen<R>(r);
 }
+
+template<class L,class R,
+  REQUIRES( decltype( declval<L>().next() , declval<R>().next() , 1 )(1)  )
+>
+constexpr auto operator |( L l, R r){
+  return GenChain<L,R>{l,r};
+}
+
 
 
 }
