@@ -2,6 +2,8 @@
 #define RANGETOOLS
 #include "it/range.hpp"
 #include "it/map.hpp"
+#include "it/helpers.hpp"
+#include "it/operators.hpp"
 
 
 #endif
