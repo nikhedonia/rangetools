@@ -52,45 +52,46 @@ auto value(L&l)
 
 template<class L, class R,
   REQUIRES( !has_next<L,R>() ) >
-auto next(L&l, R)
--> decltype(l.next()) {
-  return l.next();
+auto next(L&l, R&r)
+-> void {
+  def::next(l);
+  def::next(r);
 }
 
 template<class L, class R,
   REQUIRES( !has_done<L,R>() ) >
-auto done(L&l, R)
--> decltype(l.done() ){
-  return l.done();
+auto done(L&l, R&r)
+-> bool {
+  return def::done(l) || def::done(r) ;
 }
 
 template<class L, class R,
   REQUIRES( !has_value<L,R>() ) >
 auto value(L&l, R)
--> decltype(l.value()) {
-  return l.value();
+-> decltype( def::value(l)  ) {
+  return def::value(l) ;
 }
 
 
 template<class L, class R,
   REQUIRES( has_next<L,R>() ) >
 auto next(L&l, R&r)
--> decltype(l.next(forward<R>(r))) {
-  return l.next(forward<R>(r));
+-> decltype(l.next(r)) {
+  return l.next(r);
 }
 
 template<class L, class R,
   REQUIRES( has_done<L,R>() ) >
 auto done(L&l, R&r)
--> decltype(l.done(forward<R>(r))) {
-  return l.done(forward<R>(r));
+-> decltype(l.done(r)) {
+  return l.done(r);
 }
 
 template<class L, class R,
   REQUIRES( has_value<L,R>() ) >
 auto value(L&l, R&r)
--> decltype(l.value(forward<R>(r))) {
-  return l.value(forward<R>(r));
+-> decltype(l.value(r)) {
+  return l.value(r);
 }
 
 
@@ -124,7 +125,7 @@ struct Gen
   template<class U>
   auto next(U&u)     { def::next(i,u);  }
   template<class U>
-  auto done(U u)     { return def::done(u) || def::done(i,u);  }
+  auto done(U u)     { return def::done(i,u);  }
   template<class U>
   auto value(U u)    { return def::value(i,u); }
 
@@ -141,15 +142,15 @@ struct GenChain
   R r;
 
   template<class U>
-  auto operator!=(U) { return !l.done() &&  !r.done(l); }
-  operator bool()    { return !l.done() &&  !r.done(l); }
+  auto operator!=(U) { return !done(); }
+  operator bool()    { return !done(); }
   auto operator*()   { return r.value(l); }
   auto operator++()  { return r.next(l);  }
   auto next()        { return r.next(l);  }
   auto done()        { return r.done(l);  }
   auto value()       { return r.value(l); }
-  auto& begin()      { return *this;        }
-  auto& end()        { return *this;        }
+  auto& begin()      { return *this;      }
+  auto& end()        { return *this;      }
 
 };
 
@@ -166,11 +167,9 @@ constexpr auto operator *( Gen<> G, R r){
   return Gen<R>(r);
 }
 
-template<class L,class R,
-  REQUIRES( decltype( declval<L>().next() , declval<R>().next() , 1 )(1)  )
->
-constexpr auto operator |( L l, R r){
-  return GenChain<L,R>{l,r};
+template<class L,class R>
+auto operator |( L l, R r){
+  return GenChain<L,R>{ l,r };
 }
 
 

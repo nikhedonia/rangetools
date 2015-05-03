@@ -22,7 +22,7 @@ Describe(rangeToolsTestcase)
   };
 
   Describe(RangeTest){
-    It(should_count_from_0_to_4){
+    It(should_count_from_0_to_5){
       int i=0;
       for( auto j : gen*Range(5) ){
         Assert::That( j == i );
@@ -39,9 +39,23 @@ Describe(rangeToolsTestcase)
       }
       Assert::That(i==10);
     }
-
-
   };
+
+
+  Describe(MapTest){
+    It(should_count_from_2_to_7){
+      int i=2;
+
+      for( auto j : gen*Range(5)
+                  | Wrap<Map>([](auto x){ return x+1; })
+                  | Wrap<Map>([](auto x){ return x+1; })  ){
+        Assert::That( j == i );
+        ++i;
+      }
+      Assert::That(i==7);
+    }
+  };
+
 
 
 

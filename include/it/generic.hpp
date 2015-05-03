@@ -10,6 +10,7 @@ using std::declval;
 using std::forward;
 using std::move;
 using std::result_of;
+using std::decay_t;
 
 #define REQUIRES(...) typename std::enable_if<(__VA_ARGS__), int>::type = 0
 
