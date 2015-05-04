@@ -23,7 +23,7 @@ struct Take {
 
   template<class P>
   auto next(P&&p){
-    ++p; ++p;
+    ++p;
     advance(p);
   }
 

@@ -57,7 +57,7 @@ Describe(rangeToolsTestcase)
   };
 
   Describe(TakeTest){
-    It(should_count_odd_from_0_to_10){
+    It(should_skip_even_numbers_between_0_to_10){
       int i=1;
 
       for( auto j : gen*Range(10)
@@ -68,6 +68,21 @@ Describe(rangeToolsTestcase)
       Assert::That(i==11);
     }
   };
+
+
+  Describe(TakeWhileTest){
+    It(should_be_done_after_10){
+      int i=0;
+
+      for( auto j : gen*Range()
+                  | Wrap<TakeWhile>([](auto x){ return x<10; }) ) {
+        Assert::That( j == i );
+        ++i;
+      }
+      Assert::That(i==10);
+    }
+  };
+
 
 
 
