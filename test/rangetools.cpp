@@ -56,6 +56,19 @@ Describe(rangeToolsTestcase)
     }
   };
 
+  Describe(TakeTest){
+    It(should_count_odd_from_0_to_10){
+      int i=1;
+
+      for( auto j : gen*Range(10)
+                  | Wrap<Take>([](auto x){ return x%2; }) ) {
+        Assert::That( j == i );
+        i+=2;
+      }
+      Assert::That(i==11);
+    }
+  };
+
 
 
 

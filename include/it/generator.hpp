@@ -27,11 +27,11 @@ struct Gen
   auto value()       { return def::value(i); }
 
   template<class U>
-  auto next(U&u)     { def::next(i,u);  }
+  auto next(U&&u)     { def::next(i,u);  }
   template<class U>
-  auto done(U u)     { return def::done(i,u);  }
+  auto done(U&&u)     { return def::done(i,u);  }
   template<class U>
-  auto value(U u)    { return def::value(i,u); }
+  auto value(U&&u)    { return def::value(i,u); }
 
   auto& begin()      { return *this;      }
   auto& end()        { return *this;      }

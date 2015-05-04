@@ -12,10 +12,10 @@ struct Range  {
   int n;
 
   Range(int i, int n) : i(i) , n(n) {}
-  Range(int n) : i(0) , n(n) {}
+  Range(int n=-1) : i(0) , n(n) {}
 
   auto next() { ++i; }
-  auto done() { return i>=n; }
+  auto done() { return (i>=n)&&(n>=0); }
   auto value(){ return i; }
 
 };
