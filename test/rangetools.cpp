@@ -83,6 +83,18 @@ Describe(rangeToolsTestcase)
     }
   };
 
+  Describe(DropWhileTest){
+    It(should_count_from_5_to_10){
+      int i=5;
+
+      for( auto j : gen*Range(10)
+                  | Wrap<DropWhile>([](auto x){ return x<5; }) ) {
+        Assert::That( j == i );
+        ++i;
+      }
+      Assert::That(i==10);
+    }
+  };
 
 
 

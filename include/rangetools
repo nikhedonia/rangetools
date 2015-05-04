@@ -4,6 +4,7 @@
 #include "it/map.hpp"
 #include "it/take.hpp"
 #include "it/takeWhile.hpp"
+#include "it/dropWhile.hpp"
 #include "it/helpers.hpp"
 #include "it/operators.hpp"
 
