@@ -10,6 +10,11 @@ struct DropWhile {
   F f;
   bool dropping=1;
 
+
+  DropWhile(F f)
+    : f{f}
+  {}
+
   template<class P>
   bool advance(P&&p){
     while( dropping && p && f(*p) ) ++p;
