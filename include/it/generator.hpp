@@ -77,11 +77,15 @@ auto value(L&&l,R&&r)
 
 
 
-template<class T>
+template<class T=void>
 struct Gen
 {
   T i;
 
+  template<class...X>
+  Gen( X&&...x)
+  : i(forward<X>(x)...)
+  {}
 
   template<class U>
   auto operator!=(U) { return !def::done(i); }
@@ -124,6 +128,19 @@ struct GenChain
   auto& begin()      { return *this;        }
 
 };
+
+
+template<>
+struct Gen<void>
+{};
+
+static constexpr auto gen = Gen<>() ;
+
+
+template<class Generator>
+constexpr auto operator *( Gen<> G, Generator rhs){
+  return Gen<Generator>{rhs};
+}
 
 
 }

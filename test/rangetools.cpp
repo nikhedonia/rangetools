@@ -29,8 +29,7 @@ Describe(rangeToolsTestcase)
   Describe(RangeTest){
     It(should_count_from_0_to_4){
       int i=0;
-      auto R = Gen<Range> {5};
-      for( auto j : R ){
+      for( auto j : gen*Range(5) ){
         Assert::That( j == i );
         ++i;
       }
