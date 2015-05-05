@@ -10,7 +10,6 @@ struct DropWhile {
   F f;
   bool dropping=1;
 
-
   DropWhile(F f)
     : f(f)
   {}

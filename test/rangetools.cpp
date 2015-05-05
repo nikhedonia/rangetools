@@ -42,7 +42,6 @@ Describe(rangeToolsTestcase)
     }
   };
 
-
   Describe(MapTest){
     It(should_count_from_2_to_7){
       int i=2;
@@ -54,6 +53,22 @@ Describe(rangeToolsTestcase)
         ++i;
       }
       Assert::That(i==7);
+    }
+  };
+
+  Describe(EachTest){
+    It(should_count_from_1_to_6){
+      int i=1;
+      int k=0;
+
+      for( auto j : gen*Range(5)
+                  | Wrap<Each>([&](auto x){ Assert::That( x == k++ ); })
+                  | Wrap<Map>([](auto x){ return x+1; })){
+        Assert::That( j == i );
+        ++i;
+      }
+      Assert::That(k==5);
+      Assert::That(i==6);
     }
   };
 

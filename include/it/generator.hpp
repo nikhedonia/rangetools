@@ -1,5 +1,5 @@
-#ifndef rangetools_generator_hpp
-#define rangetools_generator_hpp
+#ifndef RANGETOOL_GENERATOR_HPP
+#define RANGETOOL_GENERATOR_HPP
 
 #include "defaults.hpp"
 

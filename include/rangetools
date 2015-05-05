@@ -2,6 +2,7 @@
 #define RANGETOOLS
 #include "it/range.hpp"
 #include "it/map.hpp"
+#include "it/each.hpp"
 #include "it/take.hpp"
 #include "it/takeWhile.hpp"
 #include "it/dropWhile.hpp"
