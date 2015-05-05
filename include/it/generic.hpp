@@ -14,6 +14,28 @@ using std::decay_t;
 
 #define REQUIRES(...) typename std::enable_if<(__VA_ARGS__), int>::type = 0
 
+#define CREATE_PROP_CHECKER(PREFIX, MEM )\
+template<class F>\
+constexpr auto PREFIX##MEM##_impl ( decltype(&F::MEM) )\
+-> bool\
+{ return 1; }\
+\
+template<class F, template<class...> class >\
+constexpr auto PREFIX##MEM##_impl ( decltype(&F::MEM) )\
+-> bool\
+{ return 1; }\
+\
+\
+template<class F>\
+constexpr auto PREFIX##MEM##_impl(...)\
+-> bool\
+{ return 0; }\
+\
+template<class F>\
+constexpr auto PREFIX##MEM ()\
+-> decltype( PREFIX##MEM##_impl<F>(0) )\
+{ return PREFIX##MEM##_impl<F>(0); }
+
 
 #define CREATE_CALL_CHECKER(PREFIX, MEM )\
 template<class F,class...X>\
@@ -36,6 +58,8 @@ CREATE_CALL_CHECKER(has_,next)
 CREATE_CALL_CHECKER(has_,done)
 CREATE_CALL_CHECKER(has_,value)
 
+CREATE_CALL_CHECKER(has_,begin)
+CREATE_CALL_CHECKER(has_,end)
 
 
 }

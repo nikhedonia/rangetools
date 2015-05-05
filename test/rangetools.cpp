@@ -1,5 +1,6 @@
 #include<igloo/igloo_alt.h>
 #include<rangetools>
+#include<vector>
 
 using namespace rangetools;
 using namespace igloo;
@@ -96,6 +97,21 @@ Describe(rangeToolsTestcase)
     }
   };
 
+  Describe(ContainerTest){
+    It(should_count_from_1_to_5){
+      int i=1;
+      vector<int> V={1,2,3,4,5};
+
+      for( auto j : gen*V
+                  | Wrap<Map>([](auto x){ return x; }))  {
+        Assert::That( j == i );
+        ++i;
+      }
+      Assert::That(i==6);
+    }
+
+
+  };
 
 
 

@@ -12,7 +12,7 @@ struct DropWhile {
 
 
   DropWhile(F f)
-    : f{f}
+    : f(f)
   {}
 
   template<class P>

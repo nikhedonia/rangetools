@@ -1,7 +1,6 @@
 #ifndef rangetools_generator_hpp
 #define rangetools_generator_hpp
 
-
 #include "defaults.hpp"
 
 namespace rangetools {
@@ -55,8 +54,36 @@ struct GenChain
   auto value()       { return r.value(l); }
   auto& begin()      { return *this;      }
   auto& end()        { return *this;      }
-
 };
+
+template<class R, class B, class E>
+struct GenRange
+{
+  R r;
+  B b;
+  E e;
+
+  GenRange(GenRange const& G)
+    : r(G.r)
+  { b=r.begin(); e=r.end(); }
+
+
+  GenRange(R r)
+    : r(r)
+  { b=r.begin(); e=r.end(); }
+
+  template<class U>
+  auto operator!=(U) { return !done(); }
+  operator bool()    { return !done(); }
+  auto operator*()   { return value(); }
+  auto operator++()  { return next();  }
+  auto next()        { return ++b;     }
+  auto done()        { return !(b!=e); }
+  auto value()       { return *b;      }
+  auto& begin()      { return *this;   }
+  auto& end()        { return *this;   }
+};
+
 
 
 template<>
