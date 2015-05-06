@@ -6,8 +6,7 @@
 namespace rangetools {
 
 template<class T=void>
-struct Gen
-{
+struct Gen {
   T i;
 
   template<class...X>
@@ -21,26 +20,30 @@ struct Gen
   auto operator*()   { return def::value(i); }
   auto operator++()  { return def::next(i);  }
 
-  auto next()        { def::next(i);  }
+  auto next()        { return def::next(i);  }
   auto done()        { return def::done(i);  }
   auto value()       { return def::value(i); }
 
   template<class U>
-  auto next(U&&u)     { def::next(i,u);  }
+  auto next(U&u)     { return def::next(i,u);  }
   template<class U>
-  auto done(U&&u)     { return def::done(i,u);  }
+  auto done(U&u)     { return def::done(i,u);  }
   template<class U>
-  auto value(U&&u)    { return def::value(i,u); }
+  auto value(U&u)    { return def::value(i,u); }
+  auto begin()      { return *this;      }
+  auto end()        { return *this;      }
 
-  auto& begin()      { return *this;      }
-  auto& end()        { return *this;      }
+  //auto operator=(Gen<T> const& G) { for generator restart
+  //  return i=G.model); // (lambda default-copy-constructor?)
+  //}
+  ////private: T model = i
+
 
 };
 
 
 template<class L, class R>
-struct GenChain
-{
+struct GenChain {
   L l;
   R r;
 
@@ -52,25 +55,25 @@ struct GenChain
   auto next()        { return r.next(l);  }
   auto done()        { return r.done(l);  }
   auto value()       { return r.value(l); }
-  auto& begin()      { return *this;      }
-  auto& end()        { return *this;      }
+  auto begin()       { return *this;      }
+  auto end()         { return *this;      }
 };
 
 template<class R, class B, class E>
-struct GenRange
-{
+struct GenRange {
   R r;
   B b;
   E e;
 
   GenRange(GenRange const& G)
-    : r(G.r)
-  { b=r.begin(); e=r.end(); }
-
+    : r(G.r)  {
+    restart();
+  }
 
   GenRange(R r)
-    : r(r)
-  { b=r.begin(); e=r.end(); }
+    : r(r)  {
+    restart();
+  }
 
   template<class U>
   auto operator!=(U) { return !done(); }
@@ -80,8 +83,12 @@ struct GenRange
   auto next()        { return ++b;     }
   auto done()        { return !(b!=e); }
   auto value()       { return *b;      }
-  auto& begin()      { return *this;   }
-  auto& end()        { return *this;   }
+  auto begin()       { return *this;   }
+  auto end()         { return *this;   }
+  auto restart()     {
+    b=r.begin();
+    e=r.end();
+  }
 };
 
 

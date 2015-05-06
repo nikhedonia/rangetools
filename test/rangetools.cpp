@@ -4,7 +4,6 @@
 
 using namespace rangetools;
 using namespace igloo;
-using namespace std;
 
 
 Describe(rangeToolsTestcase)
@@ -38,7 +37,7 @@ Describe(rangeToolsTestcase)
         Assert::That( j == i );
         ++i;
       }
-      Assert::That(i==10);
+      Assert::That(i, Equals(10));
     }
   };
 
@@ -52,7 +51,7 @@ Describe(rangeToolsTestcase)
         Assert::That( j == i );
         ++i;
       }
-      Assert::That(i==7);
+      Assert::That(i, Equals(7));
     }
   };
 
@@ -60,15 +59,14 @@ Describe(rangeToolsTestcase)
     It(should_count_from_1_to_6){
       int i=1;
       int k=0;
-
       for( auto j : gen*Range(5)
                   | Wrap<Each>([&](auto x){ Assert::That( x == k++ ); })
                   | Wrap<Map>([](auto x){ return x+1; })){
         Assert::That( j == i );
         ++i;
       }
-      Assert::That(k==5);
-      Assert::That(i==6);
+      Assert::That(k, Equals(5));
+      Assert::That(i, Equals(6));
     }
   };
 
@@ -81,7 +79,7 @@ Describe(rangeToolsTestcase)
         Assert::That( j == i );
         i+=2;
       }
-      Assert::That(i==11);
+      Assert::That(i, Equals(11) );
     }
   };
 
@@ -95,7 +93,7 @@ Describe(rangeToolsTestcase)
         Assert::That( j == i );
         ++i;
       }
-      Assert::That(i==10);
+      Assert::That(i, Equals(10) );
     }
   };
 
@@ -105,10 +103,10 @@ Describe(rangeToolsTestcase)
 
       for( auto j : gen*Range(10)
                   | Wrap<DropWhile>([](auto x){ return x<5; }) ) {
-        Assert::That( j == i );
+        Assert::That( j, Equals(i) );
         ++i;
       }
-      Assert::That(i==10);
+      Assert::That(i, Equals(10) );
     }
   };
 
@@ -119,17 +117,26 @@ Describe(rangeToolsTestcase)
 
       for( auto j : gen*V
                   | Wrap<Map>([](auto x){ return x; }))  {
-        Assert::That( j == i );
+        Assert::That( j, Equals(i) );
         ++i;
       }
       Assert::That(i==6);
     }
-
-
   };
 
-
-
+  //fail
+  //Todo: make generators restartable
+  Describe(RepeatTest){
+    int j=0;
+    It(should_count_twice_to_3){
+      for(auto i : gen*Range(3)
+                 | gen*Repeat(2) ){
+        Assert::That(i, Equals(j%3) );
+        ++j;
+      }
+      Assert::That(j, Equals(6) );
+    }
+  };
 };
 
 int main(int argc, char const* argv[])

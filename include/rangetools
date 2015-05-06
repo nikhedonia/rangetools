@@ -1,13 +1,13 @@
 #ifndef RANGETOOLS
 #define RANGETOOLS
-#include "it/range.hpp"
-#include "it/map.hpp"
-#include "it/each.hpp"
-#include "it/take.hpp"
-#include "it/takeWhile.hpp"
-#include "it/dropWhile.hpp"
-#include "it/helpers.hpp"
-#include "it/operators.hpp"
-
+#include "gen/range.hpp"
+#include "gen/map.hpp"
+#include "gen/each.hpp"
+#include "gen/take.hpp"
+#include "gen/repeat.hpp"
+#include "gen/takeWhile.hpp"
+#include "gen/dropWhile.hpp"
+#include "gen/helpers.hpp"
+#include "gen/operators.hpp"
 
 #endif
